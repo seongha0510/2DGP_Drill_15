@@ -1,3 +1,4 @@
+# python
 import turtle
 import random
 
@@ -38,12 +39,11 @@ def prepare_turtle_canvas():
     turtle.listen()
 
 
-
 def draw_big_point(p):
     turtle.goto(p)
     turtle.color(0.8, 0.9, 0)
     turtle.dot(15)
-    turtle.write('     '+str(p))
+    turtle.write('     ' + str(p))
 
 
 def draw_point(p):
@@ -51,12 +51,21 @@ def draw_point(p):
     turtle.dot(5, random.random(), random.random(), random.random())
 
 
-
-
 def draw_curve_3_points(p1, p2, p3):
-    # fill here
-    pass
+    draw_big_point(p1)
+    draw_big_point(p2)
+    draw_big_point(p3)
 
+    x1, y1 = p1; x2, y2 = p2; x3, y3 = p3
+
+    for i in range(0,100,2):
+        t = i /100
+        x = (2 * t  ** 2 - 3 * t + 1) * x1 + (-4 * t ** 2 + 4 * t) * x2 + (2 * t ** 2-t) * x3
+        y = (2 * t  ** 2 - 3 * t + 1) * y1 + (-4 * t ** 2 + 4 * t) * y2 + (2 * t ** 2-t) * y3
+        draw_point((x, y))
+
+    draw_point(p3)
+    pass
 
 
 def draw_curve_4_points(p1, p2, p3, p4):
@@ -76,8 +85,8 @@ def draw_curve_4_points(p1, p2, p3, p4):
     # draw p2-p3
     for i in range(0, 100, 2):
         t = i / 100
-        x = ((-t**3 + 2*t**2 - t)*p1[0] + (3*t**3 - 5*t**2 + 2)*p2[0] + (-3*t**3 + 4*t**2 + t)*p3[0] + (t**3 - t**2)*p4[0])/2
-        y = ((-t**3 + 2*t**2 - t)*p1[1] + (3*t**3 - 5*t**2 + 2)*p2[1] + (-3*t**3 + 4*t**2 + t)*p3[1] + (t**3 - t**2)*p4[1])/2
+        x = ((-t**3 + 2*t**2 - t)*p1[0] + (3*t**3 - 5*t**2 + 2)*p2[0] + (-3*t**3 + 4*t**2 + t)*p3[0] + (t**3 - t**2)*p4[0]) / 2
+        y = ((-t**3 + 2*t**2 - t)*p1[1] + (3*t**3 - 5*t**2 + 2)*p2[1] + (-3*t**3 + 4*t**2 + t)*p3[1] + (t**3 - t**2)*p4[1]) / 2
         draw_point((x, y))
     draw_point(p3)
 
@@ -92,5 +101,48 @@ def draw_curve_4_points(p1, p2, p3, p4):
 
 prepare_turtle_canvas()
 
+
+def mix_two_lines():
+    a1 = (-94, 223)
+    a2 = (-158, -54)
+    b1 = (154, -205)
+    b2 = (131, 293)
+
+    draw_big_point(a1)
+    draw_big_point(a2)
+    draw_big_point(b1)
+    draw_big_point(b2)
+
+    a1x, a1y = a1
+    a2x, a2y = a2
+    b1x, b1y = b1
+    b2x, b2y = b2
+
+    for i in range(0, 100, 2):
+        t = i / 100
+
+        Ax = (1 - t) * a1x + t * a2x
+        Ay = (1 - t) * a1y + t * a2y
+
+        Bx = (1 - t) * b1x + t * b2x
+        By = (1 - t) * b1y + t * b2y
+
+        x = (1 - t) * Ax + t * Bx
+        y = (1 - t) * Ay + t * By
+
+        draw_point((Ax, Ay))
+        draw_point((Bx, By))
+        draw_point((x, y))
+
+
+#mix_two_lines()
+
+#p1 = (-250, 0)
+#p2 = (-50, 100)
+#p3 = (300, -40)
+#draw_curve_3_points((-350,-100),(-50,200),(150,-100))
+#draw_curve_3_points((-50,200),(150,-100),(350,300))
+
+draw_curve_4_points((-350,-100),(-50,200),(150,-100),(350,300))
 
 turtle.done()
